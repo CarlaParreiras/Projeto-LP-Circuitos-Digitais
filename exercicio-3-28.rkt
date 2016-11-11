@@ -1,4 +1,4 @@
-; Corpo das funções inverter, and-gate e or-gate
+; Function boxes: inverter, and-gate, or-gate
 
 (define (inverter input output)
   (define (invert-input)
