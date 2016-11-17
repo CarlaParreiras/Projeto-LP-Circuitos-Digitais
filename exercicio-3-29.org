@@ -1,0 +1,50 @@
+O exerício 3.29 pede para implementarmos =or-gate= a partir das funções =and-gate= e =inverter=.
+Logo, precisamos chegar nos seguintes resultados:
+
+*Lógica OU*
+| Input1  | Input2 | Output |
+|-------+-------+-----|
+| 1 |  1 |  *1* |
+| 1  |  0 |  *1* |
+| 0 |  1 |  *1* |
+| 0  |  0 |  *0* |
+
+Conseguimos implementar o código da forma:
+
+#+BEGIN_SRC scheme
+(define (or-gate a1 a2 output)
+  (let ((w1 (make-wire)) 
+        (w2 (make-wire)) 
+        (w3 (make-wire)))
+    (inverter a1 w1)
+    (inverter a2 w2)
+    (and-gate w1 w2 w3)
+    (interver w3 output)
+    'ok))
+#+END_SRC
+Ao aplicarmos um =inverter= aos sinais dos inputs recebidos, obtemos:
+
+| a1 | a2 | w1 | w2 |
+|-----+-----+-----+-----|
+| 1 |  1 | *0* |  *0* |
+| 1  |  0 | *0*  |  *1* |
+| 0 |  1 | *1* |  *0* |
+| 0  |  0 | *1*  |  *1* |
+
+Aplicando =and-gate= a w1 e w2, temos:
+
+| w1  | w2 | w3 |
+|-----+-----+-----|
+| 0 |  0 |  *0* |
+| 0  |  1 |  *0* |
+| 1 |  0 |  *0* |
+| 1  |  1 |  *1* |
+
+Finalmente, percebemos que esse resultado, dado pelo sinal de w3, é o inverso do que queremos obter, logo aplicamos =inverter=:
+
+| w3 | output |
+|-----+-----|
+| 0 | *1* |
+| 0 | *1* |
+| 0 | *1* |
+| 1 | *0* |
