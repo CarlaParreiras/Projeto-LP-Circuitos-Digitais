@@ -35,8 +35,8 @@
       (after-delay or-gate-delay
                    (lambda ()
                      (set-signal! output new-value)))))
-  (and-action! a1 or-action-procedure)
-  (and-action! a2 or-action-procedure)
+  (add-action! a1 or-action-procedure)
+  (add-action! a2 or-action-procedure)
   'ok)
 (define (logical-or s1 s2)
   (if (= s1 s2 0)
