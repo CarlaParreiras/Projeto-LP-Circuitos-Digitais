@@ -8,31 +8,83 @@ fios por onde a corrente irá passar. Esses fios carregam sinais digitais, que p
 - *Blocos Funcionais*: 
 objetos que conectam os fios que carregam o sinal do input para os fios que carregam o sinal do output, sendo esse sinal transformado a partir do teste lógico específico do bloco. Esses blocos são classificados em:
  
-    -- *Inverter*: 
+    -- *Inverter (NOT)*: 
     
-    Esse bloco simboliza a operação complementar, que só pode ser realizada sobre uma variável por vez, por isso o inverte possui somente uma entrada e uma saída. Ele inverte o valor que chega pelo input.
+    Esse bloco simboliza a operação complementar, que só pode ser realizada sobre uma variável por vez, por isso o inverter possui somente uma entrada e uma saída, invertendo o sinal da entrada.
     
+           - Teste Lógico NOT:
+           
+           | Input | Output |
+           |-------+--------|
+           | 1 | 0 |
+           | 0 | 1 |
+           | 0 | 1 |
+               
     -- *AND-gate*:
     
     Esse bloco possui o valor lógico E, tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se, e somente se, todos os sinais da entrada forem iguais a 1.
     
+         - Teste Lógico AND:
+         
+         | Input_1 | Input_2| 0utput |
+         |-----+-----+-----|
+         | 1 | 1 | *1* |
+         | 0 | 1 | *0* |
+         | 1 | 0 | *0* |
+         | 0 | 0 | *0* |
+    
     -- *OR-gate*:
     
     Esse bloco possui o valor lógico OU (inclusivo), tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se pelo menos um dos sinais da entrada for 1.
+         
+         - Teste Lógico OR:
+         
+         | Input_1 | Input_2| 0utput |
+         |-----+-----+-----|
+         | 1 | 1 | *1* |
+         | 0 | 1 | *1* |
+         | 1 | 0 | *1* |
+         | 0 | 0 | *0* |
    
     -- *XOR-gate* *:
     
     Esse bloco possui o valor lógico OU (exclusivo), tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se pelo menos um dos sinais da entrada for igual a 1, excluíndo o caso em que todas as entradas recebem o valor 1.
-    
+         
+         - Teste Lógico XOR:
+         
+         | Input_1 | Input_2| 0utput |
+         |-----+-----+-----|
+         | 1 | 1 | *0* |
+         | 0 | 1 | *1* |
+         | 1 | 0 | *1* |
+         | 0 | 0 | *0* |
+ 
     -- *NOR-gate* *:
     
     Esse bloco pussui o valor lógico de NEGAÇÃO do OU, tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se, e somente se, nenhum sinal de entrada for igual a 1.
     
+         - Teste Lógico NOR:
+    
+         | Input_1 | Input_2| 0utput |
+         |-----+-----+-----|
+         | 1 | 1 | *0* |
+         | 0  | 1 | *0* |
+         | 1 | 0 | *0* |
+         | 0  | 0 | *1* |
+ 
     -- *NAND-gate* *: 
     
     Esse bloco possui o valor lógico de NEGAÇÃO do E, tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se, pelo menos um dos sinais de entrada for igual a 0.
-     
-     
+         
+         - Teste Lógico NAND:
+         
+         | Input_1 | Input_2| 0utput |
+         |-----+-----+-----|
+         | 1 | 1 | *0* |
+         | 0  | 1 | *1* |
+         | 1 | 0 | *1* |
+         | 0  | 0 | *1* |
+ 
      *Referência: http://www.telecom.uff.br/~delavega/public/CircDig/aposcd.pdf
      
      
