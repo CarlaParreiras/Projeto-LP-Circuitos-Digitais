@@ -1,8 +1,11 @@
 #+Title: Exercício 3.28
 
- - *Enunciado*
-  Define an or-gate as a primitive function box. Your or-gate constructor should be similar to and-gate.
+  *Enunciado:*
  
+  Define an or-gate as a primitive function box. Your or-gate constructor should be similar to and-gate.
+  
+  *Solução:*
+  
 #+BEGIN_SRC scheme
 (define (inverter input output)
   (define (invert-input)
