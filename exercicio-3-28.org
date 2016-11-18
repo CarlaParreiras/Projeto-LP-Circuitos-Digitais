@@ -39,6 +39,8 @@
       0))
 #+END_SRC
 
+Observando o padrão do código do =and-gate= e do =inverter=, obtemos o =or-gate= dessa forma:
+
 -- or-gate:
 
 #+BEGIN_SRC scheme
