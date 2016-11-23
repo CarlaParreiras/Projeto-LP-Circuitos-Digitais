@@ -1,6 +1,6 @@
 #+Title: Código dos Blocos Funcionais
 
-- *INVERTER:*
+- *INVERTER (NOT):*
 
 #+BEGIN_SRC scheme
 (define (inverter input output)
