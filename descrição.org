@@ -19,6 +19,7 @@ objetos que conectam os fios que carregam o sinal do input para os fios que carr
            | 1 | *0* |
            | 0 | *1* |
                 
+
     -- *AND-gate*:
     
     Esse bloco possui o valor lógico E, tendo no mínimo 2 entradas e uma única saída. Ele irá gerar como output o sinal 1 se, e somente se, todos os sinais da entrada forem iguais a 1.
