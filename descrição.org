@@ -16,8 +16,8 @@ objetos que conectam os fios que carregam o sinal do input para os fios que carr
            
            | Input | Output |
            |-------+--------|
-           | 1 | *0* |
-           | 0 | *1* |
+           | 1 |*0*|
+           | 0 |*1*|
                 
 
     -- *AND-gate*:
