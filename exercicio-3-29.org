@@ -1,3 +1,13 @@
+#+Title: Exercício 3.29
+
+*Enunciado:*
+
+Another way to construct an or-gate is as a compound digital logic device, built from and-gates and inverters. 
+Define a procedure or-gate that accomplishes this. 
+What is the delay time of the =or-gate= in terms of =and-gate-delay= and =inverter-delay=? 
+
+*Solução:*
+
 O exerício 3.29 pede para implementarmos =or-gate= a partir das funções =and-gate= e =inverter=.
 Logo, precisamos chegar nos seguintes resultados:
 
@@ -9,7 +19,9 @@ Logo, precisamos chegar nos seguintes resultados:
 | 0 |  1 |  *1* |
 | 0  |  0 |  *0* |
 
-Conseguimos implementar o código da forma:
+Conseguimos implementar o código da forma abaixo. O tempo de =delay= da função seria o tempo de =and-gate-delay= mais 3 vezes o tempo de =intervet=delay=, mas, como =(inverter a1 w1)= e =(inverter a2 w2)= ocorrem em dois wires diferentes, os sinais podem ser invertidos ao mesmo tempo, ou seja, em somente um tempo de =inverter-delay=. 
+
+Assim, o tempo de =delay= da função se dá como a soma do tempo de =and-gate-delay= com 2 vezes o tempo de =interver-delay=.
 
 #+BEGIN_SRC scheme
 (define (or-gate a1 a2 output)
