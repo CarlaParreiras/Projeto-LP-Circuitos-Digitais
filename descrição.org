@@ -13,11 +13,11 @@ objetos que conectam os fios que carregam o sinal do input para os fios que carr
     Esse bloco simboliza a operação complementar, que só pode ser realizada sobre uma variável por vez, por isso o inverter possui somente uma entrada e uma saída, invertendo o sinal da entrada.
     
            - Teste Lógico NOT:
-           
-           | Input | Output |
-           |-------+--------|
-           | 1 | *0* |
-           | 0 | *1* |
+         | Input | Output |
+         |-----+-----|
+         | 0 | *1* |
+         | 1 | *0* |
+                
                 
 
     -- *AND-gate*:
