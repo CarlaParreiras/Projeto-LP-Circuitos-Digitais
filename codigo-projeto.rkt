@@ -242,8 +242,6 @@
 
 (half-adder input-1 input-2 sum carry)
 
-; Instanciando a agenda 
-
 ; Tracking
 
 (probe 'sum sum) ;sum e carry iniciam com time 0 e signal 0
