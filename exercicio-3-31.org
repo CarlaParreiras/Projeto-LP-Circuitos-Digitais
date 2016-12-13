@@ -1,0 +1,116 @@
+#+Title: Exercício 3.31
+
+  *Enunciado:*
+  
+The internal procedure =accept-action-procedure!= defined in =make-wire= specifies that when a new action procedure is added to a wire, 
+the procedure is immediately run. Explain why this initialization is necessary. In particular, trace through the half-adder example 
+in the paragraphs above and say how the system's response would differ if we had defined accept-action-procedure! as
+
+#+BEGIN_SRC scheme
+(define (accept-action-procedure! proc)
+  (set! action-procedures (cons proc action-procedures)))
+#+END_SRC
+
+  *Solução:*
+  
+O código inteiro da implementação de circuito e simulação está disponível no arquivo 
+[[https://github.com/CarlaParreiras/Projeto-LP/blob/master/codigo-projeto.rkt][codigo-completo.org]]
+
+tendo em vista o código da simulação, ao chamarmos =probe=, estamos adicionando uma ação no wire passado como argumento
+
+#+BEGIN_SRC scheme
+(define (probe name wire)
+  (add-action! wire
+               (lambda ()        
+                 (newline)
+                 (display name)
+                 (display " ")
+                 (display (current-time the-agenda))
+                 (display "  New-value = ")
+                 (display (get-signal wire)))))
+#+END_SRC
+
+A função =add-action!= chama =accept-action-procedure!=, redefinindo as ações de wire
+
+#+BEGIN_SRC scheme
+(define (add-action! wire action-procedure)
+  ((wire 'add-action!) action-procedure))
+
+(define (make-wire)
+  (let ((signal-value 0) (action-procedures '()))
+    (define (set-my-signal! new-value) ;toda vez que o wire muda de sinal, chama as ações.
+      (if (not (= signal-value new-value))
+          (begin (set! signal-value new-value)
+                 (call-each action-procedures))
+          'done))    
+    (define (accept-action-procedure! proc)
+      (set! action-procedures (mcons proc action-procedures))
+      (proc))    
+    (define (dispatch m)
+      (cond ((eq? m 'get-signal) signal-value)
+            ((eq? m 'set-signal!) set-my-signal!)
+            ((eq? m 'add-action!) accept-action-procedure!)
+            (else (error "Unknown operation - WIRE" m))))
+    dispatch))
+#+END_SRC
+
+O exercício nos propõem redefinir =accept-action-procedure!= da seguinte forma:
+
+#+BEGIN_SRC scheme
+(define (accept-action-procedure! proc)
+      (set! action-procedures (mcons proc action-procedures)))
+#+END_SRC
+
+O problema dessa implementação é que isso faz com que a ação seja colocada na agenda, mas não seja executada ao chamarmos propagate.
+
+#+BEGIN_SRC scheme
+(define (segment-time s) (mcar s))
+(define (segment-queue s) (mcdr s))
+(define (first-segment agenda) (mcar (segments agenda)))
+
+(define (first-agenda-item agenda)
+  (if (empty-agenda? agenda)
+      (error "Agenda is empty -- FIRST-AGENDA-ITEM")
+      (let ((first-seg (first-segment agenda)))
+        (set-current-time! agenda (segment-time first-seg))
+        (front-queue (segment-queue first-seg))))) 
+
+(define (propagate)
+  (if (empty-agenda? the-agenda)
+      'done
+      (let ((first-item (first-agenda-item the-agenda)))
+        (first-item)
+        (remove-first-agenda-item! the-agenda)
+        (propagate))))
+#+END_SRC
+
+O resultado obtido com a simulação de =half-adder= nos mostra que a mudança em =accept-action-procedure!= 
+faz com que percamos o acompanhamento da mudança de sinal do wire (feito através de =probe=).
+No código abaixo podemos ver que, ao realizarmos a simulação, são mostradas somente as indicações de que as ações foram realizadas.
+
+#+BEGIN_SRC scheme
+> (half-adder input-1 input-2 sum carry)
+'ok
+> (probe 'sum sum)
+> (probe 'carry carry)
+> (set-signal! input-1 1)
+'done
+> (propagate)
+'done
+#+END_SRC
+
+O resultado correto seria:
+
+#+BEGIN_SRC scheme
+> (half-adder input-1 input-2 sum carry)
+'ok
+> (probe 'sum sum)
+sum 0  New-value = 0
+> (probe 'carry carry)
+carry 0  New-value = 0
+> (set-signal! input-1 1)
+'done
+> (propagate)
+sum 8  New-value = 1
+'done
+#+END_SRC

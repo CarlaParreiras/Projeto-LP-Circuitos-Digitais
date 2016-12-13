@@ -6,3 +6,5 @@ O projeto consiste na criação de um programa de simulação de circuitos lógi
   Tomamos como base para esse trabalho a subseção 3.3.4 do livro *Structure and Interpretation of Computer Programs*, a partir da qual montaremos o programa e resolveremos os exercícios propostos.
   
 * SICP - *3.3.4 A Simulator for Digital Circuits*: https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4
+
+Além disso, iremos criar um Codificador Decimal-BCD (Binary Coded Decimal), com base no SICP e no capítulo *Codificadores/Decodificadores* do livro *Análise de Circuitos Digitais* - Prof. Luiz Marcelo Chiesse da Silva, Cefet/PR – Cornélio Procópio.
