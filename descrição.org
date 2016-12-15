@@ -12,7 +12,8 @@ objetos que conectam os fios que carregam o sinal do input para os fios que carr
     
     Esse bloco simboliza a operação complementar, que só pode ser realizada sobre uma variável por vez, por isso o inverter possui somente uma entrada e uma saída, invertendo o sinal da entrada.
     
-           - Teste Lógico NOT:
+         - Teste Lógico NOT:
+         
          | Input | Output |
          |-----+-----|
          | 0 | *1* |
@@ -106,25 +107,32 @@ Nos blocos funcionais existem operadores primitivos habilitados para extrair o s
     
 - *Adicionadores Binários*:
 
-   -- Half-Adder:
+      -- Half-Adder:
+      
    
    O half-adder recebe dois sinais binários por wires (A e B) e produz duas saídas, uma soma (sum) e um carry-out (carry).
    
-         - Tabela verdade Half-Adder:
+   
+     - Tabela verdade Half-Adder:
+     
          
-         | A | B | Sum | Carry |
-         |-----+-----+-----|
-         | 0 | 0 | *0* | *0* |
-         | 0 | 1 | *1* | *0* |
-         | 1 | 0 | *1* | *0* |
-         | 1 | 1 | *0* | *1* |
+     | A | B | Sum | Carry |
+     |-----+-----+-----|
+     | 0 | 0 | *0* | *0* |
+     | 0 | 1 | *1* | *0* |
+     | 1 | 0 | *1* | *0* |
+     | 1 | 1 | *0* | *1* |
+     
+     
          
-        
-   -- Full-Adder:
+        -- Full-Adder:
+   
    
    O full-adder recebe três sinais binários por wires (A, B e C) e produz duas saídas, uma soma (sum) e um carry-in de C.
       
+      
       - Tabela verdade Full-Adder:
+      
       
       | A | B | C | Sum | Carry |
       |-----+-----+-----+-----+-----|
