@@ -104,3 +104,35 @@ Nos blocos funcionais existem operadores primitivos habilitados para extrair o s
     
     Afirma que o procedimento designado deve ser executado sempre que o sinal no fio muda de valor.
     
+- *Adicionadores Binários*:
+
+   -- Half-Adder:
+   
+   O half-adder recebe dois sinais binários por wires (A e B) e produz duas saídas, uma soma (sum) e um carry-out (carry).
+   
+         - Tabela verdade Half-Adder:
+         
+         | A | B | Sum | Carry |
+         |-----+-----+-----|
+         | 0 | 0 | *0* | *0* |
+         | 0 | 1 | *1* | *0* |
+         | 1 | 0 | *1* | *0* |
+         | 1 | 1 | *0* | *1* |
+         
+        
+   -- Full-Adder:
+   
+   O full-adder recebe três sinais binários por wires (A, B e C) e produz duas saídas, uma soma (sum) e um carry-in de C.
+      
+      - Tabela verdade Full-Adder:
+      
+      | A | B | C | Sum | Carry |
+      |-----+-----+-----+-----+-----|
+      | 0 | 0 | 0 | *0* | *0* |
+      | 0 | 0 | 1 | *1* | *0* |
+      | 0 | 1 | 0 | *1* | *0* |
+      | 0 | 1 | 1 | *0* | *1* |
+      | 1 | 0 | 0 | *1* | *0* |
+      | 1 | 0 | 1 | *0* | *1* |
+      | 1 | 1 | 0 | *0* | *1* |
+      | 1 | 1 | 1 | *1* | *1* |
