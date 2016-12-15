@@ -15,7 +15,7 @@ expressed in terms of the delays for =and-gates=, =or-gates=, and =inverters=?
 
 *Solução:*
 
-Assumindo a função a existência da função =set-signal!= e dos blocos funcionais =or-gate=, =and-gate= e =inverter= (que já foram implementados em exercícios anteriores), podemos definir =ripple-carry-adder= como uma função que verifica se o =cdr= das listas A e B (representadas por =list-a= e =list-b=) está vazio e, caso verdadeiro, muda o sinal de =c= (carry) para 0; caso falso, executa a função =full-adder= com o primeiro valor das listas A, B e S, o wire =c= e um novo wire =c-out=, que vai receber o valor da soma que "sobe" uma casa, e faz uma recursão, chamando a função =ripple-carry-adder= com o cdr das listas A, B e S, e =c-out=.
+Assumindo a existência da função =set-signal!= e dos blocos funcionais =or-gate=, =and-gate= e =inverter= (que já foram implementados em exercícios anteriores), podemos definir =ripple-carry-adder= como uma função que verifica se o =cdr= das listas A e B (representadas por =list-a= e =list-b=) está vazio e, caso verdadeiro, muda o sinal de =c= (carry) para 0; caso falso, executa a função =full-adder= com o primeiro valor das listas A, B e S, o wire =c= e um novo wire =c-out=, que vai receber o valor da soma que "sobe" uma casa, e faz uma recursão, chamando a função =ripple-carry-adder= com o cdr das listas A, B e S, e =c-out=.
 
 Isso garante que estamos somando o valor Ak com Bk e que passamos o valor Ck para a próxima "casa", ou seja, para ser adicionado a Ak+1 e Bk+1. 
 
