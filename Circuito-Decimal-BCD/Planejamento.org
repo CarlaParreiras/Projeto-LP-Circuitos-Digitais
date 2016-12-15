@@ -1,0 +1,11 @@
+#+Title: Circuito Decimal BCD
+
+Planejamento:
+
+1. *Desmembrar o número numa lista de algarismos*
+
+2. Para cada algarismo, criar a representação do mesmo
+
+3. Para cada representação, o circuito gera um binário (colocar as 4 saídas numa lista)
+
+4. Apendar os binários (listas)
