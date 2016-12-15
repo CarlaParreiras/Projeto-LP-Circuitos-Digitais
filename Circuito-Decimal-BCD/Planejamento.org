@@ -4,6 +4,14 @@ Planejamento:
 
 1. *Desmembrar o número numa lista de algarismos*
 
+#+BEGIN_SRC scheme
+(define (rep n list-n)
+    (if (= n 0)
+         list-n
+         (rep (quotient n 10) (cons (remainder n 10) list-n))))
+#+END_SRC
+
+
 2. Para cada algarismo, criar a representação do mesmo
 
 3. Para cada representação, o circuito gera um binário (colocar as 4 saídas numa lista)
