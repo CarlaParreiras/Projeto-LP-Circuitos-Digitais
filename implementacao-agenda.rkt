@@ -14,7 +14,7 @@
 
 (define (current-time agenda) (mcar agenda)) ;o primeiro valor indica o tempo passado
 
-(define (segments agenda) (mcdr agenda)) ;o segundo valor carrega os segments, que indica as ações que devem ser feitas num determinado tempo
+(define (segments agenda) (mcdr agenda)) ;o segundo valor carrega os segments, os quais indicam as ações que devem ser feitas num determinado tempo
 
 (define (empty-agenda? agenda)
   (null? (segments agenda)))
@@ -37,18 +37,18 @@
 (define (rest-segments agenda) (mcdr (segments agenda)))
 
 (define (add-to-agenda! time action agenda) ;adição de ações na agenda
-  (define (belongs-before? segments) ;verifica se a ação a ser adicionada está num tempo anterior ao primeiro segment da agenda
+  (define (belongs-before? segments) ;verifica se a agenda está vazia ou se a ação a ser adicionada está num tempo anterior ao primeiro segment da agenda
     (or (null? segments)
         (< time (segment-time (mcar segments)))))
   (define (make-new-time-segment time action) ;cria um novo segment
     (let ((q (make-queue)))
       (insert-queue! q action)
       (make-time-segment time q)))
-  (define (add-to-segments! segments) ;adiciona um segment na agenda, no tempo determinado por time
+  (define (add-to-segments! segments) ;quando o time é o mesmo que algum segment na agenda, adiciona a ação a este segment
     (if (= (segment-time (mcar segments)) time)
         (insert-queue! (segment-queue (mcar segments))
                        action)
-        (let ((rest (mcdr segments)))
+        (let ((rest (mcdr segments))) ;se o time não é o mesmo do segment, realiza-se a recursão até esvasiar a agenda ou chegar/passar de time
           (if (belongs-before? rest)
               (set-mcdr!
                segments
@@ -57,7 +57,7 @@
               (add-to-segments! rest)))))
   (let ((segments (segments agenda)))
     (if (belongs-before? segments)
-        (set-segments! ;se a ação pertence a um tempo anterior, ela é adicionada antes dos segments da agenda
+        (set-segments! ;se a ação pertence a um tempo anterior, é criado um segment antes dos demais
          agenda
          (mcons (make-new-time-segment time action)
                segments))
