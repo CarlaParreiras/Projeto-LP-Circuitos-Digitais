@@ -1,0 +1,12 @@
+#+Title: Instruções
+
+- Caso você não tenha Racket em seu computador, baixe o drRacket nesse site:
+
+https://racket-lang.org/download/
+
+- Baixe o zip do repositório em:
+https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais
+
+e transfira os arquivos (todos em uma mesma pasta) para uma página de seu computador (área de trabalho, por exemplo).
+
+- Agora é só abrir o arquivo e executar.
