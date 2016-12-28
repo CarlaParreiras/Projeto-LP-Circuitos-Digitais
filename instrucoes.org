@@ -1,12 +1,171 @@
 #+Title: Instruções
 
-- Caso você não tenha Racket em seu computador, baixe o drRacket nesse site:
-
-https://racket-lang.org/download/
-
+**** O simulador foi implementado em Racket. Caso você não tenha um interpretador para a linguagem, baixe o [[https://racket-lang.org/download/][DrRacket]].
 - Baixe o zip do repositório em:
 https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais
 
-e transfira os arquivos (todos em uma mesma pasta) para uma página de seu computador (área de trabalho, por exemplo).
+Para criar e realizar a simulação de um circuito, implementamos uma série de funções do livro [[https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4][SICP]] e disponibilizamos as mesmas nesse repositório. 
+ 
+O livro já contém as instruções para a utilização de cada função, mas para criar a abstração dessas funções, utilizamos um sistema de dependência entre os arquivos. Com isso, tivemos que separar aqui algumas instruções para a utilização de nosso "pacote".
 
-- Agora é só abrir o arquivo e executar.
+** 1- Como salvar os arquivos
+
+Baixe o zip dos arquivos do [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais][repositório]] e salve-os numa pasta em seu computador.
+
+Nesta pasta você poderá criar arquivos que utilizem as funções implementadas no projeto.
+
+** 2- Como criar um circuito
+
+Para criar um circuito, são necessárias as funções dos arquivos [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais/blob/master/manipulacao-wire.rkt/][manipulacao-wire.rkt]] e [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais/blob/master/blocos-logicos.rkt/][blocos-logicos.rkt]].
+
+Essa funções podem ser acessadas escrevendo-se no início do código do seu arquivo:
+
+#+BEGIN_SRC scheme
+ #lang racket
+ 
+ (require "manipulacao-wire.rkt"
+          "blocos-logicos.rkt")
+#+END_SRC
+Com isso, criamos um circuito definindo uma função cujos argumentos são as entradas e saídas do circuito, e o corpo é formado pelos blocos lógicos que compõem o circuito. Os blocos lógicos realizam as mudanças dos sinais dentro do circuito e são explicados no arquivo [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais/blob/master/descricao.rkt/][descricao.rkt]]. Caso haja algum fio intermediário, este deve ser criado no corpo do circuito, utilizando o comando =let= com a função =make-wire=.
+
+**** Os circuitos já são acoplados ao sistema de simulação, logo, eles não retornam resultado, somente um sinal de que foram executados ( ok' ). Para visualizarmos os resultados obtidos a cada mudança nos sinais das entrada, implementamos a simulação no passo 3
+
+Por exemplo, o circuito abaixo é definido com duas entradas, =input1= e =input2=, e duas saídas, =output1= e -output2=, além de ter um wire intermediário, =inter=. 
+
+#+BEGIN_SRC scheme
+ #lang racket
+ 
+ (require "manipulacao-wire.rkt"
+          "blocos-logicos.rkt")
+          
+ (define (never-two-ones input1 input2 output1 output2)
+   (let ((inter (make-wire)))
+     (and-gate input1 input2 output1)
+     (or-gate input1 input2 inter)
+     (inverter inter output2)
+     'ok))
+#+END_SRC
+Este circuito nunca obtém ambas as saídas iguais a 1. Caso as duas entradas sejam diferentes, ambas as saídas serão 0. Caso ambas as entradas sejam 1, o sinal de =output1= será 1 e =output2= será 0; e caso ambas as entradas sejam 0, o sinal de =output1= será 0 e =output2= será 1. 
+ 
+Para instanciarmos o circuito, devemos definir as entradas e saídas, que serão =wires= (fios), e chamarmos o mesmo. No nosso exemplo:
+ 
+#+BEGIN_SRC scheme
+ #lang racket
+ 
+ (require "manipulacao-wire.rkt"
+          "blocos-logicos.rkt")
+          
+ (define (never-two-ones input1 input2 output1 output2)
+   (let ((inter (make-wire)))
+     (and-gate input1 input2 output1)
+     (or-gate input1 input2 inter)
+     (inverter inter output2)
+     'ok))
+     
+ (define i1 (make-wire))
+ (define i2 (make-wire))
+ (define o1 (make-wire))
+ (define o2 (make-wire))
+ 
+ > (never-two-ones i1 i2 o1 o2)
+ 'ok
+#+END_SRC
+ 
+** 3- Como criar uma simulação
+ 
+Após criarmos um circuito, devemos então testá-lo e obtermos os resultados para determinadas entradas. Para isso utilizamos a simulação através das funções presentes no arquivo [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais/blob/master/implementacao-simulacao.rkt/][implementacao-simulacao.rkt]].
+ 
+Da mesma forma que as funções do circuito, acessamos as funções da simulação através do comando =require=, precisando somente adicionar o arquivo à lista como segue abaixo:
+ 
+#+BEGIN_SRC scheme
+ #lang racket
+ 
+ (require "manipulacao-wire.rkt"
+          "blocos-logicos.rkt"
+          "implementacao-simulacao.rkt")
+#+END_SRC
+ 
+*** 3.1- Tracking
+ 
+A simulação é feita através do tracking de uma ou mais saídas, por meio da função =probe=, que recebe como argumentos um título para a saída (pode ser escolhido aleatoriamente) e a variável da saída. 
+ 
+Ao instanciarmos o circuito, todas as variéaveis iniciam com sinal 0, logo, a função =probe= irá retornar inicialmente o título da saída o seu valor (=New-value=) e o tempo decorrido, dado pelo tempo das ações (cada bloco lógico tem um tempo de execução de sua ação, que pode ser redefinido no arquivo [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais/blob/master/blocos-logicos.rkt/][blocos-logicos.rkt]].
+ 
+ Tomando o exemplo anterior, para fazermos o tracking das saídas:
+ 
+#+BEGIN_SRC scheme
+ #lang racket
+ 
+ (require "manipulacao-wire.rkt"
+          "blocos-logicos.rkt"
+          "implementacao-simulacao.rkt")
+          
+ (define (never-two-ones input1 input2 output1 output2)
+   (let ((inter (make-wire)))
+     (and-gate input1 input2 output1)
+     (or-gate input1 input2 inter)
+     (inverter inter output2)
+     'ok))
+ 
+ (define i1 (make-wire))
+ (define i2 (make-wire))
+ (define o1 (make-wire))
+ (define o2 (make-wire))
+ 
+ >(never-two-ones i1 i2 o1 o2)
+ 'ok
+ >(probe 'doble-ones o1)
+ doble-ones 0  New-value = 0
+ >(probe 'doble-zeros o2)
+ doble-zeros 0  New-value = 0
+#+END_SRC
+ 
+Os títulos ='doble-ones= e ='doble-zeros= foram escolhidos pois =o1= só se torna 1 quando ambas as entradas são 1 e =o2= só se torna 1 quando ambas as entradas são 0, mas poderíamos usar ='saída-1= e ='saída-2= ou quaisquer outros títulos a escolha.
+ 
+*** 3.2- Ativação
+ 
+Finalmente, para realizarmos a simulação, devemos definir quais serão os sinais das entradas e vermos o que acontece com as saídas.
+ 
+Para mudarmos o valor de uma das entradas utilizamos a função =set-signal!= que recebe como argumentos a variável cujo sinal será modificado e o novo sinal da mesma (0 ou 1).
+
+Para propagarmos essa mudança no circuito utilizamos a função =propagate=, que não recebe argumentos. Essa função irá executar as ações do circuito e retornará as mudanças nas variáveis rastreadas pela função =probe=, com o tempo decorrido e o valor final dos sinais das mesmas.
+
+No nosso exemplo, podemos mudar o sinal de =i1= e =i2= para 1 e, como sabemos, ao final da simulação o sinal de =o1= deverá ser 1 e =o2= deverá ser 0. 
+
+O resultado obtido é:
+
+#+BEGIN_SRC scheme
+#lang racket
+
+
+(require "manipulacao-wire.rkt"
+         "blocos-logicos.rkt"
+         "implementacao-simulacao.rkt")
+         
+(define (never-two-ones input1 input2 output1 output2)
+  (let ((inter (make-wire)))
+    (and-gate input1 input2 output1)
+    (or-gate input1 input2 inter)
+    (inverter inter output2)
+    'ok))
+
+(define i1 (make-wire))
+(define i2 (make-wire))
+(define o1 (make-wire))
+(define o2 (make-wire))
+
+>(never-two-ones i1 i2 o1 o2)
+'ok
+>(probe 'doble-ones o1)
+doble-ones 0  New-value = 0
+>(probe 'doble-zeros o2)
+doble-zeros 0  New-value = 0
+> (set-signal! i1 1)
+> (set-signal! i2 1)
+> (propagate)
+doble-zeros 1  New-value = 1
+doble-ones 2  New-value = 1
+doble-zeros 4  New-value = 0
+#+END_SRC
+
+Esse resultado nos mostra que a saída =o1=, com o título ='doble-ones=, muda o sinal para 1 no tempo 2, enquanto a saída =o2=, com o título ='doble-zeros=, muda o sinal para 1 no tempo 1 e depois retorna ao sinal 0 no tempo 4.
