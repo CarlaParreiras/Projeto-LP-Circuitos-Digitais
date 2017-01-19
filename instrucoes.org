@@ -2,7 +2,7 @@
 
 **** O simulador foi implementado em Racket. Caso você não tenha um interpretador para a linguagem, baixe o [[https://racket-lang.org/download/][DrRacket]].
 
-Para criar e realizar a simulação de um circuito, implementamos uma série de funções do livro [[https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4][SICP]] e disponibilizamos as mesmas nesse repositório. 
+Para criar e realizar a simulação de um circuito, implementamos uma série de funções do livro [[https://mitpress.mit.edu/sicp/full-text/book/book-Z-H-22.html#%_sec_3.3.4][SICP]] e disponibilizamos as mesmas nesse [[https://github.com/CarlaParreiras/Projeto-LP-Circuitos-Digitais][repositório]]. 
    
 O livro já contém as instruções para a utilização de cada função, mas para criar a abstração dessas funções, utilizamos um sistema de dependência entre os arquivos. Com isso, tivemos que separar aqui algumas instruções para a utilização de nosso "pacote". 
 
